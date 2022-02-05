@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+        <record model="ir.ui.view" id="library_app.penalty_model_list">
+            <field name="name">Penalty List</field>
+            <field name="model">library_app.penalty_model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="penaltyid"></field>
+                    <field name="amount"></field>
+                    <field name="reader_id"></field>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form definition-->
+        <record model="ir.ui.view" id="library_app.penalty_model_form">
+            <field name="name">Penalty Form</field>
+            <field name="model">library_app.penalty_model</field>
+            <field name="arch" type="xml">
+                <form string="Penalty">
+                    <group>
+                        <field name="penaltyid"></field>
+                        <field name="amount"></field>
+                        <field name="reader_id"></field>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.sequence" id="seq_name_occ">
+          <field name="name">Reference Test</field>
+          <field name="code">reference.test</field>
+          <field name="padding">3</field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="library_app.action_window_penalty">
+            <field name="name">Penalty Window</field>
+            <field name="res_model">library_app.penalty_model</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Filters
+      
+          <record model="ir.ui.view" id="task_app.task_model_search">
+            <field name="name">Student Filters</field>
+            <field name="model">validation_app.student_model</field>
+            <field name="arch" type="xml">
+              <search>
+                <field name="name"/>
+                <filter string="Finished" name="Finished" domain="[('active','=',False)]"></filter>
+                <filter string="Not Finished" name="NotFinished" domain="[('active','=',True)]"></filter>
+              </search>
+            </field>
+          </record>-->
+
+
+        <!-- server action to the one above -->
+        <!--
+          <record model="ir.actions.server" id="task_app.action_server">
+            <field name="name">task_app server</field>
+            <field name="model_id" ref="model_task_app_task_app"/>
+            <field name="state">code</field>
+            <field name="code">
+              action = {
+                "type": "ir.actions.act_window",
+                "view_mode": "tree,form",
+                "res_model": model._name,
+              }
+            </field>
+          </record>
+      -->
+    </data>
+</odoo>

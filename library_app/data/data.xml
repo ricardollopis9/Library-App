@@ -1,0 +1,36 @@
+<odoo>
+    <data noupdate="1">
+        <record id="1" model="library_app.book_model">
+            <field name="title">El Quijote</field>
+            <field name="gender">Novel</field>
+            <field name="year">1940</field>
+            <field name="photo" type="base64" file="library_app/static/images/quijote.jpeg"/>
+            <field name="stock">100</field>
+        </record>
+        <record id="2" model="library_app.author_model">
+            <field name="name">Don Alfonso</field>
+            <field name="surname">de la Mancha</field>
+            <field name="year">1924</field>
+            <field name="photo" type="base64" file="library_app/static/images/hqdefault.jpg"/>
+        </record>
+        <record id="3" model="library_app.reader_model">
+            <field name="name">Javier</field>
+            <field name="surname">JG</field>
+            <field name="dni">20882999B</field>
+            <field name="photo" type="base64" file="library_app/static/images/hqdefault.jpg"/>
+            <field name="phone">878787878</field>
+            <field name="email">juasjuas@gmail.com</field>
+            <field name="money">1000</field>
+            <field name="direction">Alginet 1 nº 0</field>
+            <field name="city">Alginet jajajaj</field>
+            <field name="postalcode">46230</field>
+        </record>
+        <record id="4" model="library_app.employe_model">
+            <field name="name">Grat</field>
+            <field name="surname">MXC</field>
+            <field name="dni">20882999B</field>
+            <field name="photo" type="base64" file="library_app/static/images/hqdefault.jpg"/>
+            <field name="phone">999888777</field>
+        </record>
+    </data>
+</odoo>

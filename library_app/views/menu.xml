@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <!-- Top menu item -->
+        <menuitem name="Library App" id="library_app.menu_root" />
+
+        <!-- menu categories -->
+        <menuitem name="Operations" id="library_app.menu_operation" parent="library_app.menu_root" />
+
+        <!-- actions -->
+        <menuitem name="Readers" id="library_app.menu_reader_list" parent="library_app.menu_operation" action="library_app.action_window_reader" />
+        <menuitem name="Author" id="library_app.menu_author_list" parent="library_app.menu_operation" action="library_app.action_window_author" />
+        <menuitem name="Employe" id="library_app.menu_employe_list" parent="library_app.menu_operation" action="library_app.action_window_employe" />
+        <menuitem name="Books" id="library_app.menu_book_list" parent="library_app.menu_operation" action="library_app.action_window_book" />
+        <menuitem name="Rent" id="library_app.menu_rent_list" parent="library_app.menu_operation" action="library_app.action_window_rent" />
+        <menuitem name="Penalty" id="library_app.menu_penalty_list" parent="library_app.menu_operation" action="library_app.action_window_penalty" />
+    </data>
+</odoo>

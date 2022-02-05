@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_library_app_reader_model,library_app.reader_model,model_library_app_reader_model,base.group_user,1,1,1,1
+access_library_app_employe_model,library_app.employe_model,model_library_app_employe_model,base.group_user,1,1,1,1
+access_library_app_penalty_model,library_app.penalty_model,model_library_app_penalty_model,base.group_user,1,1,1,1
+access_library_app_book_model,library_app.book_model,model_library_app_book_model,base.group_user,1,1,1,1
+access_library_app_author_model,library_app.author_model,model_library_app_author_model,base.group_user,1,1,1,1
+access_library_app_rent_model,library_app.rent_model,model_library_app_rent_model,base.group_user,1,1,1,1
+access_library_app_author_model,library_app.author_model,model_library_app_author_model,base.group_user,1,1,1,1

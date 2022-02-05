@@ -1,0 +1,141 @@
+<odoo>
+    <data>
+      <!-- explicit list view definition -->
+  
+      <record model="ir.ui.view" id="library_app.reader_model_list">
+        <field name="name">Reader List</field>
+        <field name="model">library_app.reader_model</field>
+        <field name="arch" type="xml">
+          <tree>
+            <field name="partnerid"></field>
+            <field name="name"></field>
+            <field name="surname"></field>
+            <field name="dni"></field>
+            <field name="photo"></field>
+            <field name="phone"></field>
+            <field name="email"></field>
+            <field name="money"></field>
+            <field name="penaltyamount"></field>
+            <field name="penalty_ids"></field>
+          </tree>
+        </field>
+      </record>
+  
+      <!-- Form definition-->
+      <record model="ir.ui.view" id="library_app.reader_model_form">
+        <field name="name">Reader Form</field>
+        <field name="model">library_app.reader_model</field>
+        <field name="arch" type="xml">
+          <form string="Reader">
+            <notebook>
+              <page string="Datos 1">
+                <group>
+                  <group>
+                    <field name="partnerid"></field>
+                    <field name="name"></field>
+                    <field name="surname"></field>
+                    <field name="dni"></field>
+                    <field name="photo" widget="image"></field>
+                    <field name="phone"></field>
+                    <field name="email"></field>
+                  </group>
+                  <group>
+                    <field name="money"></field>
+                    <field name="penaltyamount"></field>
+                    <field name="penalty_ids"></field>
+                  </group>
+                </group>
+              </page>
+              <page string="Datos 2">
+                <group>
+                  <field name="direction"></field>
+                  <field name="city"></field>
+                  <field name="postalcode"></field>
+                </group>
+              </page>
+            </notebook>
+          </form>
+        </field>
+      </record>
+  
+      <record model="ir.ui.view" id="library_app.reader_model_kanban">
+        <field name="name">Reader Kanban</field>
+        <field name="model">library_app.reader_model</field>
+        <field name="arch" type="xml">
+          <kanban class="o_res_partner_kanban">
+            <field name="dni" />
+            <field name="name" />
+            <field name="email" />
+            <field name="photo" widget="image"></field>
+            <field name="phone" />
+            <templates>
+              <t t-name="kanban-box">
+                <div t-attf-class="oe_kanban_global_click">
+                  <div class="o_kanban_image">
+                    <field name="photo" nolabel="1" widget="image" class="oe_right oe_avatar" />
+                  </div>
+                  <div class="oe_kanban_details">
+                    <strong>
+                      <field name="name" class="oe_inline" />
+                      <field name="surname" class="oe_inline" />
+                    </strong>
+                    <div t-if="record.phone.value">
+                      <t t-esc="record.phone.value" />
+                    </div>
+                    <div t-if="record.email.value">
+                      <t t-esc="record.email.value" />
+                    </div>
+                  </div>
+                </div>
+              </t>
+            </templates>
+          </kanban>
+        </field>
+      </record>
+
+      <record model="ir.sequence" id="seq_name_occ">
+        <field name="name">Reference Test</field>
+        <field name="code">reference.test</field>
+        <field name="padding">3</field>
+      </record>
+  
+      <!-- actions opening views on models -->
+  
+      <record model="ir.actions.act_window" id="library_app.action_window_reader">
+        <field name="name">Reader Window</field>
+        <field name="res_model">library_app.reader_model</field>
+        <field name="view_mode">kanban,tree,form</field>
+      </record>
+  
+      <!-- Filters
+      
+          <record model="ir.ui.view" id="task_app.task_model_search">
+            <field name="name">Student Filters</field>
+            <field name="model">validation_app.student_model</field>
+            <field name="arch" type="xml">
+              <search>
+                <field name="name"/>
+                <filter string="Finished" name="Finished" domain="[('active','=',False)]"></filter>
+                <filter string="Not Finished" name="NotFinished" domain="[('active','=',True)]"></filter>
+              </search>
+            </field>
+          </record>-->
+  
+  
+      <!-- server action to the one above -->
+      <!--
+          <record model="ir.actions.server" id="task_app.action_server">
+            <field name="name">task_app server</field>
+            <field name="model_id" ref="model_task_app_task_app"/>
+            <field name="state">code</field>
+            <field name="code">
+              action = {
+                "type": "ir.actions.act_window",
+                "view_mode": "tree,form",
+                "res_model": model._name,
+              }
+            </field>
+          </record>
+      -->
+    </data>
+  </odoo>
