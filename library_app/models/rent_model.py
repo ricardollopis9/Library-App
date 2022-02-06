@@ -9,6 +9,8 @@ class RentModel(models.Model):
 
     date = fields.Date(string="Date", required=True)
     state = fields.Selection(selection=[('Draft','Draft'),('Confirmed','Confirmed')], default="Draft")
+    returned_state = fields.Selection(selection=[('true','true'),('false','false')], default="false")
+    name = fields.Char(compute="_changename")
 
     book_id = fields.Many2one("library_app.book_model", string="Book", required=True)
     employe_id = fields.Many2one("library_app.employe_model", string="Employe", required=True)
@@ -16,16 +18,24 @@ class RentModel(models.Model):
 
     def change_state(self):
         self.state = "Confirmed"
-        self.ensure_one()
-        self._cr.autocommit(False)
+        self.returned_state = "true"
 
-        for rec in self.lines_ids:
-            if rec.quantity <= rec.product_id.stock:
-                rec.product_id.stock -= rec.quantity
-            else:
-                self._cr.rollback()
-                self._cr.autocommit(True)
-                raise ValidationError("No hay suficiente stock.")
-        self._cr.commit()
-        self._cr.autocommit(True)
+        if(self.book_id.stock > 0):
+            self.book_id.stock -= 1
+            return True
+        else:
+            raise ValidationError("No queda stock de este libro!")
+
+    def returned(self):
+        self.returned_state = "false"
+        self.book_id.stock += 1
+
         return True
+
+    @api.depends("name")
+    def _changename(self):
+        if len(self.env['library_app.rent_model'].search([])) == 0:
+            id = 1
+        id = (self.env['library_app.rent_model'].search([])[-1].id + 1)
+        ids = "Rent Id " + str(id)
+        self.name = ids

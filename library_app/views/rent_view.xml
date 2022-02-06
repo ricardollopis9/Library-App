@@ -22,7 +22,7 @@
         <form string="Rent">
           <sheet>
             <header>
-              <button name="change_state" type="object" string="Confirm Rent" class="oe_highlight" />
+              <button name="change_state" type="object" string="Confirm Rent" class="oe_highlight" attrs="{'invisible':[('state','=','Confirmed')]}"/>
               <field name="state" widget="statusbar" />
             </header>
           <group>
@@ -31,8 +31,50 @@
             <field name="reader_id" attrs="{'readonly':[('state','=','Confirmed')]}"></field>
             <field name="employe_id" attrs="{'readonly':[('state','=','Confirmed')]}"></field>
           </group>
+          <bottom>
+            <field name="returned_state" attrs="{'invisible':[(True)]}"></field>
+            <button name="returned" type="object" string="Returned" class="oe_highlight" attrs="{'invisible':[('returned_state','=','false')], 'visible':[('returned_state','=','true')]}"/>
+          </bottom>
           </sheet>
         </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="library_app.rent_model_search">
+      <field name="name">Rent Filter</field>
+      <field name="model">library_app.rent_model</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="state" />
+          <filter string="Confirmed Rents" name="ConfirmedRents" domain="[('state','=','Confirmed')]" />
+          <filter string="Draft Rents" name="ConfirmedRents" domain="[('state','=','Draft')]" />
+          <filter string="Returned Books" name="Returned" domain="[('returned_state','=','false')]" />
+          <filter string="No Returned Books" name="NoReturned" domain="[('returned_state','=','true')]" />
+        </search>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="library_app.rent_model_graph">
+      <field name="name">Library Graph</field>
+      <field name="model">library_app.rent_model</field>
+      <field name="arch" type="xml">
+        <graph>
+          <field name="date" interval="month" />
+          <field name="reader_id" type="row" />
+          <field name="employe_id" type="row" />
+        </graph>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="library_app.rent_model_calendar">
+      <field name="name">Library Calendar</field>
+      <field name="model">library_app.rent_model</field>
+      <field name="arch" type="xml">
+        <calendar date_start="date" color="name" mode="month" event_open_popup="True" form_view_id="library_app.library_form" quick_add="False">
+          <field name="name" />
+          <field name="book_id" />
+          <field name="employe_id" />
+        </calendar>
       </field>
     </record>
 
@@ -42,7 +84,7 @@
     <record model="ir.actions.act_window" id="library_app.action_window_rent">
       <field name="name">Rent Window</field>
       <field name="res_model">library_app.rent_model</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,search,graph,calendar</field>
     </record>
 
     <!-- Filters

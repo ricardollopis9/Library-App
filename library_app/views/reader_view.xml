@@ -15,7 +15,7 @@
             <field name="phone"></field>
             <field name="email"></field>
             <field name="money"></field>
-            <field name="penaltyamount"></field>
+            <field name="penaltyamount" decoration-danger = "penaltyamount"></field>
             <field name="penalty_ids"></field>
           </tree>
         </field>
@@ -28,9 +28,9 @@
         <field name="arch" type="xml">
           <form string="Reader">
             <notebook>
-              <page string="Datos 1">
-                <group>
-                  <group>
+              <page string="Datos Principales">
+                <group name="top">
+                  <group name="left">
                     <field name="partnerid"></field>
                     <field name="name"></field>
                     <field name="surname"></field>
@@ -39,14 +39,16 @@
                     <field name="phone"></field>
                     <field name="email"></field>
                   </group>
-                  <group>
+                  <group name="right">
                     <field name="money"></field>
-                    <field name="penaltyamount"></field>
+                    <field name="penaltyamount" decoration-danger = "penaltyamount"></field>
+                    <button name="pay" type="object" string="Pay" class="oe_highlight"/>
                     <field name="penalty_ids"></field>
+                    <field name="rent_ids"></field>
                   </group>
                 </group>
               </page>
-              <page string="Datos 2">
+              <page string="Datos Secundarios">
                 <group>
                   <field name="direction"></field>
                   <field name="city"></field>
@@ -93,6 +95,18 @@
         </field>
       </record>
 
+      <record model="ir.ui.view" id="library_app.reader_model_pivot">
+        <field name="name">Library Pivot</field>
+        <field name="model">library_app.reader_model</field>
+        <field name="arch" type="xml">
+          <pivot string="Pivot Library">
+            <field name="partnerid" type="row"></field>
+            <field name="money"></field>
+            <field name="penaltyamount"></field>
+          </pivot>
+        </field>
+      </record>
+
       <record model="ir.sequence" id="seq_name_occ">
         <field name="name">Reference Test</field>
         <field name="code">reference.test</field>
@@ -104,7 +118,7 @@
       <record model="ir.actions.act_window" id="library_app.action_window_reader">
         <field name="name">Reader Window</field>
         <field name="res_model">library_app.reader_model</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,tree,form,pivot</field>
       </record>
   
       <!-- Filters

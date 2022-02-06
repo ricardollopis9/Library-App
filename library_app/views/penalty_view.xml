@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="penaltyid"></field>
-                    <field name="amount"></field>
+                    <field name="amount" decoration-danger="amount"></field>
                     <field name="reader_id"></field>
                 </tree>
             </field>
@@ -20,11 +20,20 @@
             <field name="model">library_app.penalty_model</field>
             <field name="arch" type="xml">
                 <form string="Penalty">
+                  <sheet>
+                    <header>
+                      <button name="change_state" type="object" string="Confirm Penalty" class="oe_highlight" attrs="{'invisible':[('state','=','Confirmed')]}"/>
+                      <field name="state" widget="statusbar" />
+                    </header>
                     <group>
-                        <field name="penaltyid"></field>
-                        <field name="amount"></field>
-                        <field name="reader_id"></field>
+                        <field name="amount" attrs="{'readonly':[('state','=','Confirmed')]}" decoration-danger="amount"></field>
+                        <field name="reader_id" attrs="{'readonly':[('state','=','Confirmed')]}"></field>
                     </group>
+                    <bottom>
+                      <field name="pay_state" attrs="{'invisible':[(True)]}"></field>
+                      <button name="pay" type="object" string="Pay" class="oe_highlight" attrs="{'invisible':[('pay_state','=','true')]}"/>
+                    </bottom>
+                    </sheet>
                 </form>
             </field>
         </record>

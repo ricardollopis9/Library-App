@@ -22,7 +22,7 @@ class ReaderModel(models.Model):
     penaltyamount = fields.Float (string="Penalty Amount", readonly=True, default=0, help="This is the reader debt.")
 
     rent_ids = fields.One2many("library_app.rent_model", "reader_id", string="Rent", required=True)
-    penalty_ids = fields.One2many("library_app.penalty_model", "reader_id", readonly=True, string="Penalty", required=True)
+    penalty_ids = fields.One2many("library_app.penalty_model", "reader_id", string="Penalty", required=True)
 
     @api.model
     def create(self, vals):
@@ -53,3 +53,10 @@ class ReaderModel(models.Model):
             raise ValidationError("Email is not correct!")
 
         return True
+
+    def pay(self):
+        if(self.money > self.penaltyamount):
+            self.money -= self.penaltyamount
+            self.penaltyamount = 0
+            for rec in self.penalty_ids:
+                rec.pay_state = "true"
