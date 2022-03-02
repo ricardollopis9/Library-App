@@ -27,6 +27,7 @@
             </header>
           <group>
             <field name="date" attrs="{'readonly':[('state','=','Confirmed')]}"></field>
+            <field name="gender" attrs="{'readonly':[('state','=','Confirmed')]}"></field>
             <field name="book_id" attrs="{'readonly':[('state','=','Confirmed')]}"></field>
             <field name="reader_id" attrs="{'readonly':[('state','=','Confirmed')]}"></field>
             <field name="employe_id" attrs="{'readonly':[('state','=','Confirmed')]}"></field>

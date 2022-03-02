@@ -10,6 +10,7 @@ class RentModel(models.Model):
     date = fields.Date(string="Date", required=True)
     state = fields.Selection(selection=[('Draft','Draft'),('Confirmed','Confirmed')], default="Draft")
     returned_state = fields.Selection(selection=[('true','true'),('false','false')], default="false")
+    gender = fields.Selection(string="Gender", required=True, selection=[('Theater','Theater'), ('Novel','Novel'), ('Poetry','Poetry'), ('Scary','Scary'), ('', '')], default='', help="This is the book categories")
     name = fields.Char(compute="_changename")
 
     book_id = fields.Many2one("library_app.book_model", string="Book", required=True)
@@ -39,3 +40,15 @@ class RentModel(models.Model):
         id = (self.env['library_app.rent_model'].search([])[-1].id + 1)
         ids = "Rent Id " + str(id)
         self.name = ids
+
+    def check_category(self):
+        if(self.gender == ''):
+            raise ValidationError("You must select a book gender.")
+        else:
+            return True
+
+    @api.onchange('gender')
+    def onchange_category(self):
+        self.book_id=""
+        domain = {'book_id': [('gender', '=', self.gender)]}
+        return {'domain': domain}

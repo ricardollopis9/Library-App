@@ -1,0 +1,17 @@
+<odoo>
+    <record id="module_library_category" model="ir.module.category">
+        <field name="name">Library</field>
+    </record>
+    <!-- Clinica User Group -->
+    <record id="library_group_admins" model="res.groups">
+        <field name="name">Administrativos</field>
+        <field name="category_id" ref="module_library_category" />
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+    </record>
+    <!-- Clinica Factultativo Group -->
+    <record id="library_group_employes" model="res.groups">
+        <field name="name">Empleados</field>
+        <field name="category_id" ref="module_library_category" />
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+    </record>
+</odoo>

@@ -12,7 +12,7 @@ class PenaltyModel(models.Model):
     penaltyid = fields.Integer(string="Penalty id", readonly=True, help="This is the penalty id")
     amount = fields.Float(string="Penalty Amount", required=True, help="This is the penalty amount")
     state = fields.Selection(selection=[('Draft','Draft'),('Confirmed','Confirmed')], default="Draft")
-    pay_state = fields.Selection(selection=[('false','false'),('true','true')], default="false")
+    pay_state = fields.Selection(selection=[('Not Paid','Not Paid'),('Paid','Paid')], default="Not Paid")
     name = fields.Char(compute="_changename")
 
     reader_id = fields.Many2one("library_app.reader_model", string="Reader", required=True)
@@ -38,12 +38,11 @@ class PenaltyModel(models.Model):
 
     def pay(self):
         if(self.state == "Confirmed"):
-            if(self.pay_state == "false"):
-                self.pay_state = "true"
-            elif(self.reader_id.money < self.reader_id.penaltyamount):
-                raise ValidationError("No tiene suficiente dinero para pagar!")
-            else:
+            if(self.pay_state == "Not Paid"):
+                self.pay_state = "Paid"
                 self.reader_id.money -= self.amount
                 self.reader_id.penaltyamount -= self.amount
+            elif(self.reader_id.money < self.reader_id.penaltyamount):
+                raise ValidationError("No tiene suficiente dinero para pagar!")
         else:
             raise ValidationError("Primero necesitas confirmar la multa!")

@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="penaltyid"></field>
+                    <field name="pay_state" decoration-danger = "pay_state == 'Not Paid'" decoration-success = "pay_state == 'Paid'"></field>
                     <field name="amount" decoration-danger="amount"></field>
                     <field name="reader_id"></field>
                 </tree>
@@ -31,11 +32,24 @@
                     </group>
                     <bottom>
                       <field name="pay_state" attrs="{'invisible':[(True)]}"></field>
-                      <button name="pay" type="object" string="Pay" class="oe_highlight" attrs="{'invisible':[('pay_state','=','true')]}"/>
+                      <button name="pay" type="object" string="Pay" class="oe_highlight" attrs="{'invisible':[('pay_state','=','Paid')]}"/>
                     </bottom>
                     </sheet>
                 </form>
             </field>
+        </record>
+
+        <record model="ir.ui.view" id="library_app.penalty_model_search">
+          <field name="name">Penalty Filter</field>
+          <field name="model">library_app.penalty_model</field>
+          <field name="arch" type="xml">
+            <search>
+              <field name="state" />
+              <filter string="Draft Penaltys" name="DraftPenaltys" domain="[('state','=','Draft')]" />
+              <filter string="Not Paid" name="NotPaid" domain="[('pay_state','=','Not Paid')]" />
+              <filter string="Paid" name="Paid" domain="[('pay_state','=','Paid')]" />
+            </search>
+          </field>
         </record>
 
         <record model="ir.sequence" id="seq_name_occ">
@@ -49,7 +63,7 @@
         <record model="ir.actions.act_window" id="library_app.action_window_penalty">
             <field name="name">Penalty Window</field>
             <field name="res_model">library_app.penalty_model</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,search</field>
         </record>
 
         <!-- Filters

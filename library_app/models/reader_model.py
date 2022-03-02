@@ -18,8 +18,8 @@ class ReaderModel(models.Model):
     postalcode = fields.Char(string="Postal Code", required=True, index=True, help="Postal Code")
     city = fields.Char(string="City", required=True, index=True, help="City")
     direction = fields.Char(string="Direction", required=True, index=True, help="Direction")
-    money = fields.Float(string="Money", required=True, default=0, help="This is the reader money")
-    penaltyamount = fields.Float (string="Penalty Amount", readonly=True, default=0, help="This is the reader debt.")
+    money = fields.Float(string="Money", required=True, default=0, help="This is the reader money", store=True)
+    penaltyamount = fields.Float (string="Penalty Amount", readonly=True, default=0, help="This is the reader debt.", store=True)
 
     rent_ids = fields.One2many("library_app.rent_model", "reader_id", string="Rent", required=True)
     penalty_ids = fields.One2many("library_app.penalty_model", "reader_id", string="Penalty", required=True)
@@ -59,4 +59,4 @@ class ReaderModel(models.Model):
             self.money -= self.penaltyamount
             self.penaltyamount = 0
             for rec in self.penalty_ids:
-                rec.pay_state = "true"
+                rec.pay_state = "Paid"
